@@ -13,7 +13,7 @@ public class PriceCalculator {
     public void calculatePrice() throws IOException {
         Scanner scanner = new Scanner(System.in);
         MyFileWriter writer = new MyFileWriter("/home/lehansun/development/avazdusevich-price-calc/" +
-                "avazdusevich-price-calc/src/main/java/com/epam/brest/file/Results");
+                "avazdusevich-price-calc/src/main/java/com/epam/brest/sources/Results");
 
         Double[] enteredValues = new Double[2];
         String inputValue;
