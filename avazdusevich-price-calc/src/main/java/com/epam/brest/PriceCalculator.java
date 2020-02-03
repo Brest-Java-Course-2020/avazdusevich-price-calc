@@ -14,7 +14,6 @@ public class PriceCalculator {
 
     public void calculatePrice() throws IOException {
         Scanner scanner = new Scanner(System.in);
-        MyFileWriter writer = new MyFileWriter(filePath);
 
         Double[] enteredValues = new Double[2];
         String inputValue;
