@@ -39,11 +39,9 @@ public class PriceCalculator {
             }
 
             if (i == 2) {
-
                 Double calcResult = calculatePrice(enteredValues[0], enteredValues[1]);
                 System.out.println("Price: $" + calcResult);
                 writeResult(enteredValues[0], enteredValues[1], calcResult);
-                System.out.println("Price: $" + calcResult);
                 i = 0;
             }
 
