@@ -9,11 +9,12 @@ import java.util.Scanner;
 public class PriceCalculator {
 
     private PriceList priceList = new PriceList();
+    private final String filePath = "/home/lehansun/development/avazdusevich-price-calc/" +
+            "avazdusevich-price-calc/src/main/java/com/epam/brest/sources/Results";
 
     public void calculatePrice() throws IOException {
         Scanner scanner = new Scanner(System.in);
-        MyFileWriter writer = new MyFileWriter("/home/lehansun/development/avazdusevich-price-calc/" +
-                "avazdusevich-price-calc/src/main/java/com/epam/brest/sources/Results");
+        MyFileWriter writer = new MyFileWriter(filePath);
 
         Double[] enteredValues = new Double[2];
         String inputValue;
@@ -39,18 +40,11 @@ public class PriceCalculator {
             }
 
             if (i == 2) {
-                Double costPerDistance = (enteredValues[0] * priceList.getDistancePrice(enteredValues[0]));
-                Double costPerWeight = (enteredValues[1] * priceList.getLoadPrice(enteredValues[1]));
-                Double calcResult = costPerDistance + costPerWeight;
 
+                Double calcResult = calculatePrice(enteredValues[0], enteredValues[1]);
                 System.out.println("Price: $" + calcResult);
-
-                writer.writeStrToFile("Distance-"+enteredValues[0]+" , costPerKm-"
-                        + priceList.getDistancePrice(enteredValues[0]) +
-                        " , weight-" + enteredValues[1]+ " , costPerKg-" + priceList.getLoadPrice(enteredValues[1])
-                        + " , totalCost-" + calcResult
-                );
-
+                writeResult(enteredValues[0], enteredValues[1], calcResult);
+                System.out.println("Price: $" + calcResult);
                 i = 0;
             }
 
@@ -61,6 +55,18 @@ public class PriceCalculator {
 
     private static boolean isNotExitValue(String value) {
         return !value.equalsIgnoreCase("Q");
+    }
+
+    private double calculatePrice(double distance, double weight) {
+        return (distance * priceList.getDistancePrice(distance)) + (weight * priceList.getLoadPrice(weight));
+    }
+
+    private void writeResult(double distance, double weight, double result) throws IOException {
+        MyFileWriter writer = new MyFileWriter(filePath);
+        writer.writeStrToFile("Distance-"+distance+" , costPerKm-"
+                + priceList.getDistancePrice(distance) +
+                " , weight-" + weight+ " , costPerKg-" + priceList.getLoadPrice(weight)
+                + " , totalCost-" + result);
     }
 
 }
