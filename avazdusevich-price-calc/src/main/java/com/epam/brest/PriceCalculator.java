@@ -1,10 +1,11 @@
 package com.epam.brest;
 
+import com.epam.brest.util.Calculator;
 import com.epam.brest.util.DoubleConverter;
 import com.epam.brest.util.MyFileWriter;
 import java.util.Scanner;
 
-public class PriceCalculator {
+public class PriceCalculator implements Calculator {
 
     private PriceList priceList = new PriceList();
     private static final String ENTER_DISTANCE = "Please, enter distance or Q for exit: ";
@@ -15,7 +16,7 @@ public class PriceCalculator {
     private int iterator = 0;
 
 
-    public void startCalculating() {
+    public void makeCalculations() {
         Scanner scanner = new Scanner(System.in);
         String inputValue = "";
         while (isNotExitValue(inputValue)){
