@@ -2,7 +2,6 @@ package com.epam.brest.util;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.io.IOException;
 
 public class MyFileWriter {
     private static String address;
@@ -11,7 +10,7 @@ public class MyFileWriter {
         address = filePath;
     }
 
-    public void writeStrToFile(String str) throws IOException {
+    public void writeStrToFile(String str) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(address));) {
             bufferedWriter.write(str + "\n");
         } catch (Exception e) {

@@ -7,9 +7,7 @@ import java.util.ArrayList;
 public class PriceList {
 
     static {
-        MyFileReader reader = new MyFileReader("/home/lehansun/development/avazdusevich-price-calc/" +
-                "avazdusevich-price-calc/src/main/java/com/epam/brest/sources/PriceList" +
-                "");
+        MyFileReader reader = new MyFileReader("src/main/java/com/epam/brest/sources/PriceList");
         ArrayList<String> priceList = reader.readFromFile();
         shortDistancePrice = Double.parseDouble(priceList.get(1));
         mediumDistancePrice = Double.parseDouble(priceList.get(2));

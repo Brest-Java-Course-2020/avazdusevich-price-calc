@@ -6,15 +6,9 @@ public class DoubleConverter {
         try {
             double enteredDoubleValue = Double.parseDouble(value);
             return enteredDoubleValue > 0;
-        } catch (NumberFormatException ex) {
+        } catch (NumberFormatException e) {
             return false;
         }
-    }
-
-    public static double convertToDouble(String value) {
-        if (isCorrectDoubleValue(value)) {
-            return Double.parseDouble(value);
-        } else throw new IllegalArgumentException("Введено не корректное значение");
     }
 
 }
