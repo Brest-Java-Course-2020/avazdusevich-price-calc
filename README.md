@@ -41,9 +41,7 @@ learning how to work with git and make Maven project
 
     4. Собираем проект с помощью Maven:
         mvn archetype:generate
-        2501
-        Define value for property 'groupId': com.epam
-        Define value for property 'artifactId': avazdusevich-price-calc [ avazdusevich-цена-известково]
+        Define value for property 'artifactId': avazdusevich-price-calc
         Define value for property 'version' 1.0-SNAPSHOT: : 1.2
         Define value for property 'package' com.epam: :
         Define value for property 'compilerMode' simple: :
@@ -72,3 +70,5 @@ learning how to work with git and make Maven project
     - Mark Directory as
        - Sources Root
        
+        2501
+        Define value for property 'groupId': com.epam.brest

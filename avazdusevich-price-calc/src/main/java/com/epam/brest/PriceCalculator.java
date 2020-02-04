@@ -2,8 +2,6 @@ package com.epam.brest;
 
 import com.epam.brest.util.DoubleConverter;
 import com.epam.brest.util.MyFileWriter;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class PriceCalculator {
@@ -15,10 +13,9 @@ public class PriceCalculator {
     private static final String QUIT_VALUE = "Q";
     private Double[] enteredValues = new Double[2];
     private int iterator = 0;
-    private MyFileWriter resultWriter = new MyFileWriter("src/main/java/com/epam/brest/sources/Results");
 
 
-    public void startCalculating() throws IOException {
+    public void startCalculating() {
         Scanner scanner = new Scanner(System.in);
         String inputValue = "";
         while (isNotExitValue(inputValue)){
@@ -68,7 +65,7 @@ public class PriceCalculator {
         }
     }
 
-    private void finishCalculations() throws IOException {
+    private void finishCalculations() {
         if (iterator == 2) {
             System.out.println("Price: $" + calculatePrice(enteredValues[0], enteredValues[1]));
             writeResultToFile(enteredValues[0], enteredValues[1], calculatePrice(enteredValues[0], enteredValues[1]));
