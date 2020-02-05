@@ -1,6 +1,5 @@
 package com.epam.brest;
 
-import com.epam.brest.util.Calculator;
 import com.epam.brest.util.DoubleConverter;
 import com.epam.brest.util.MyFileWriter;
 import java.util.Scanner;
