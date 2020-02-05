@@ -15,7 +15,7 @@ public class PriceCalculator implements Calculator {
     private int iterator = 0;
 
 
-    public void makeCalculations() {
+    public void makeCalculation() {
         Scanner scanner = new Scanner(System.in);
         String inputValue = "";
         while (isNotExitValue(inputValue)){
