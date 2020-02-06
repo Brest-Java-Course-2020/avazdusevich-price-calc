@@ -15,6 +15,7 @@ public class BigDecimalPriceCalc implements Calculator{
     private final static String ENTER_DISTANCE_MESSAGE = "Please, enter distance or Q for exit: ";
     private final static String ENTER_WEIGHT_MESSAGE = "Please, enter weight or Q for exit: ";
     private final static String EXCEPTION_MESSAGE = "Something went wrong!";
+    private final static String INVALID_VALUE_MESSAGE = "Invalid value entered.";
 
     private final static int DISTANCE = 0;
     private final static int WEIGHT = 1;
@@ -46,7 +47,7 @@ public class BigDecimalPriceCalc implements Calculator{
             BigDecimal enteredValue = new BigDecimal(value);
             return enteredValue.compareTo(BigDecimal.valueOf(0)) > 0;
         } catch (NumberFormatException e) {
-            System.out.println("Invalid value entered.");
+            System.out.println(INVALID_VALUE_MESSAGE);
             return false;
         }
     }
@@ -75,7 +76,7 @@ public class BigDecimalPriceCalc implements Calculator{
                 }
                 iterator++;
             } else {
-                System.out.println("Invalid value entered.");
+                System.out.println(INVALID_VALUE_MESSAGE);
             }
         }
     }
