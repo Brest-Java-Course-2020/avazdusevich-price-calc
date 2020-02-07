@@ -2,58 +2,44 @@ package com.epam.brest;
 import com.epam.brest.util.MyFileReader;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 public class PriceList {
+    private static ArrayList<PriceArgument> distanceArguments = new ArrayList<>();
+    private static ArrayList<PriceArgument> weightArguments = new ArrayList<>();
 
     static {
-        MyFileReader reader = new MyFileReader("src/main/java/com/epam/brest/resources/PriceList");
-        ArrayList<String> priceList = reader.readFromFile();
-        shortDistancePrice = new BigDecimal(priceList.get(1)).setScale(2, RoundingMode.HALF_UP);
-        mediumDistancePrice = new BigDecimal(priceList.get(2)).setScale(2, RoundingMode.HALF_UP);
-        longDistancePrice = new BigDecimal(priceList.get(3)).setScale(2, RoundingMode.HALF_UP);
+        MyFileReader reader = new MyFileReader("src/main/java/com/epam/brest/resources/Price per KM");
+        ArrayList<String> lines = reader.readFromFile();
+        for (String argument : lines) {
+            distanceArguments.add(PriceArgument.fromLine(argument));
+        }
 
-        lightLoadPrice = new BigDecimal(priceList.get(5)).setScale(2, RoundingMode.HALF_UP);
-        mediumLoadPrice = new BigDecimal(priceList.get(6)).setScale(2, RoundingMode.HALF_UP);
-        hardLoadPrice = new BigDecimal(priceList.get(7)).setScale(2, RoundingMode.HALF_UP);
-
+        reader = new MyFileReader("src/main/java/com/epam/brest/resources/Price per KG");
+        lines = reader.readFromFile();
+        for (String argument : lines) {
+            weightArguments.add(PriceArgument.fromLine(argument));
+        }
     }
 
-    private static BigDecimal shortDistancePrice;
-    private static BigDecimal mediumDistancePrice;
-    private static BigDecimal longDistancePrice;
-
-
-    private static BigDecimal lightLoadPrice;
-    private static BigDecimal mediumLoadPrice;
-    private static BigDecimal hardLoadPrice;
 
     public BigDecimal getDistancePrice(BigDecimal distance) {
-        if (distance.compareTo(BigDecimal.valueOf(1000)) < 0) {
-            return shortDistancePrice;
+        for (PriceArgument argument : distanceArguments) {
+            if (distance.compareTo(argument.getSmallestValue()) > 0
+                && distance.compareTo(argument.getBiggestValue()) <= 0) {
+                return argument.getCost();
+            }
         }
-        if (distance.compareTo(BigDecimal.valueOf(1000)) > 0 && distance.compareTo(BigDecimal.valueOf(5000)) < 0) {
-            return mediumDistancePrice;
-        }
-        if (distance.compareTo(BigDecimal.valueOf(5000)) > 0) {
-            return longDistancePrice;
-        }
-
-        return mediumDistancePrice;
+        throw new IllegalArgumentException("Distance limit exceeded.");
     }
 
-    public BigDecimal getLoadPrice(BigDecimal weight) {
-        if (weight.compareTo(BigDecimal.valueOf(500)) < 0) {
-            return lightLoadPrice;
+    public BigDecimal getWeightPrice(BigDecimal weight) {
+        for (PriceArgument argument : weightArguments) {
+            if (weight.compareTo(argument.getSmallestValue()) > 0
+                    && weight.compareTo(argument.getBiggestValue()) <= 0) {
+                return argument.getCost();
+            }
         }
-        if (weight.compareTo(BigDecimal.valueOf(500)) > 0 && weight.compareTo(BigDecimal.valueOf(1000)) < 0) {
-            return mediumLoadPrice;
-        }
-        if (weight.compareTo(BigDecimal.valueOf(1000)) > 0) {
-            return hardLoadPrice;
-        }
-
-        return mediumLoadPrice;
+        throw new IllegalArgumentException("Weight limit exceeded.");
     }
 }

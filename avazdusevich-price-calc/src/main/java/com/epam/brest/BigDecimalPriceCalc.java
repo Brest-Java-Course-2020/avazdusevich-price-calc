@@ -92,7 +92,7 @@ public class BigDecimalPriceCalc implements Calculator{
 
     private BigDecimal getResult() {
         BigDecimal distancePrice = distance.multiply(priceList.getDistancePrice(distance));
-        BigDecimal weightPrice = weight.multiply(priceList.getLoadPrice(weight));
+        BigDecimal weightPrice = weight.multiply(priceList.getWeightPrice(weight));
         return distancePrice.add(weightPrice);
     }
 
