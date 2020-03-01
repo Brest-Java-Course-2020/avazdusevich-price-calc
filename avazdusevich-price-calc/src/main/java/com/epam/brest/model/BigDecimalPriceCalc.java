@@ -1,9 +1,12 @@
-package com.epam.brest;
+package com.epam.brest.model;
+
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
+@Component
 public class BigDecimalPriceCalc implements Calculator{
 
     private BigDecimal distance;
