@@ -1,10 +1,17 @@
-package com.epam.brest;
+package com.epam.brest.model;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
+@Component
 public class BigDecimalPriceCalc implements Calculator{
+    // Инициализация логера
+    private static final Logger log = LoggerFactory.getLogger(BigDecimalPriceCalc.class);
 
     private BigDecimal distance;
     private BigDecimal weight;
@@ -47,7 +54,7 @@ public class BigDecimalPriceCalc implements Calculator{
             BigDecimal enteredValue = new BigDecimal(value);
             return enteredValue.compareTo(BigDecimal.valueOf(0)) > 0;
         } catch (NumberFormatException e) {
-            System.out.println(INVALID_VALUE_MESSAGE);
+            log.error(INVALID_VALUE_MESSAGE + " " + e.getMessage());
             return false;
         }
     }
@@ -62,6 +69,7 @@ public class BigDecimalPriceCalc implements Calculator{
                 break;
             default:
                 System.out.println(EXCEPTION_MESSAGE);
+                log.info(EXCEPTION_MESSAGE);
         }
     }
 
@@ -83,17 +91,30 @@ public class BigDecimalPriceCalc implements Calculator{
 
     private void finishCalculation() {
         if (iterator==FINISH) {
-            BigDecimal result = getResult().setScale(2, RoundingMode.HALF_UP);
-            System.out.println("\nPrise: $" + result);
-            System.out.println("_____________________________________\n");
-            iterator=0;
+            try {
+                BigDecimal result = getResult().setScale(2, RoundingMode.HALF_UP);
+                System.out.println("\nPrise: $" + result);
+                System.out.println("_______________________________________________\n");
+                iterator = 0;
+                log.info("Distance = " + distance + "km; Weight = " + weight + "kg; Prise: $" + result);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                iterator = 0;
+                System.out.println("Please, check out our limits and repeat input.");
+                System.out.println("===============================================\n");
+            }
         }
     }
 
-    private BigDecimal getResult() {
-        BigDecimal distancePrice = distance.multiply(priceList.getDistancePrice(distance));
-        BigDecimal weightPrice = weight.multiply(priceList.getWeightPrice(weight));
-        return distancePrice.add(weightPrice);
+    private BigDecimal getResult() throws InterruptedException {
+        try {
+            BigDecimal distancePrice = distance.multiply(priceList.getDistancePrice(distance));
+            BigDecimal weightPrice = weight.multiply(priceList.getWeightPrice(weight));
+            return distancePrice.add(weightPrice);
+        } catch (IllegalArgumentException e)  {
+            log.error(e.getMessage());
+        }
+        throw new InterruptedException("Limits exceeded. Values are out of bounds.");
     }
 
 }
