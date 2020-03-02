@@ -1,6 +1,8 @@
 # avazdusevich-price-calc
 maven project
 
+![CI](https://github.com/Brest-Java-Course-2020/avazdusevich-price-calc/workflows/CI/badge.svg)
+
 learning how to work with git and make Maven project
 
     1. Работа в терминале:
